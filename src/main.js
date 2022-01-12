@@ -11,6 +11,7 @@
 // let kit
 // let contract
 // let products = []
+let music = [{ "song": "The song name", "artist": "Artist name" }]
 
 // const connectCeloWallet = async function () {
 //   if (window.celo) {
@@ -95,7 +96,7 @@
 //         </div>
 //         <h2 class="card-title fs-4 fw-bold mt-2">${_product.name}</h2>
 //         <p class="card-text mb-4" style="min-height: 82px">
-//           ${_product.description}             
+//           ${_product.description}
 //         </p>
 //         <p class="card-text mt-4">
 //           <i class="bi bi-geo-alt-fill"></i>

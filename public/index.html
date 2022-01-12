@@ -126,14 +126,34 @@
         .search-list>ul>li>a {
             text-decoration: none;
             color: inherit;
-            display: block;
-            width: 100%;
-            height: 100%;
         }
 
         .artist {
             font-weight: lighter;
             font-size: 12px;
+        }
+
+        .support {
+            outline: none;
+            background-color: #238636;
+            color: #fff;
+            border-radius: 5px;
+            border: 1px solid #238636;
+            font-size: 12px;
+            padding: 5px;
+            float: right;
+            margin-right: 1%;
+        }
+
+        .preview {
+            outline: none;
+            background-color: #fff;
+            color: #000;
+            border-radius: 5px;
+            border: 1px solid #fff;
+            font-size: 12px;
+            padding: 5px;
+            float: right;
         }
     </style>
 
@@ -170,6 +190,9 @@
                                         The song name
                                         <small class="artist">-artist name</small>
                                     </a>
+                                    <button class="preview">&#9658; preview</button>
+                                    <button class="support">support</button>
+                                    <audio src=""></audio>
                                 </li>
                             </ul>
                         </div>
