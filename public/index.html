@@ -108,6 +108,13 @@
             background-color: #1f2327;
             margin: 10px auto;
             border-radius: 10px;
+            overflow-y: scroll;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .search-list::-webkit-scrollbar {
+            display: none;
         }
 
         .search-list>ul {
@@ -161,7 +168,7 @@
 </head>
 
 <body class="d-flex h-100 text-center text-white bg-dark bg-img"
-    style="background-image: url('https://raw.githubusercontent.com/DavidBut505/Dmusik/main/shot.png');">
+    style="background-image: url('https://raw.githubusercontent.com/DavidBut505/Dmusik/main/public/bg.jpg');">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
             <div>
@@ -182,7 +189,7 @@
                     <h1 class="header">Dmusik</h1>
                     <div class="col-md-6 blur">
                         <h4 class="lead">Search for your favourite song</h4>
-                        <input type="search" class="search-bar" name="search" id="searchSong" placeholder="Search here">
+                        <input id="searchQuery" type="search" class="search-bar" name="search" placeholder="Search here">
                         <div class="search-list">
                             <ul>
                                 <li>

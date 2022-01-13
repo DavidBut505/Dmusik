@@ -3,6 +3,18 @@
 // import BigNumber from "bignumber.js"
 // import marketplaceAbi from "../contract/marketplace.abi.json"
 // import erc20Abi from "../contract/erc20.abi.json"
+// import { axios } from "axios";
+import * as axios from 'axios';
+
+document.getElementById("searchQuery").addEventListener('input', function (evt) {
+    axios.get(`https://api.allorigins.win/raw?url=https://api.deezer.com/search?q=${this.value}`)
+        .then(function (response) {
+            console.log(response.data.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+});
 
 // const ERC20_DECIMALS = 18
 // const MPContractAddress = "0x178134c92EC973F34dD0dd762284b852B211CFC8"
@@ -11,7 +23,7 @@
 // let kit
 // let contract
 // let products = []
-let music = [{ "song": "The song name", "artist": "Artist name" }]
+// let music = [{ "song": "The song name", "artist": "Artist name" }]
 
 // const connectCeloWallet = async function () {
 //   if (window.celo) {
