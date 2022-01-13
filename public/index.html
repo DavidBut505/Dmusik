@@ -117,22 +117,22 @@
             display: none;
         }
 
-        .search-list>ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            text-align: left;
+        .search-list-ul {
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            text-align: left !important;
         }
 
-        .search-list>ul>li {
+        .search-list-li {
             width: 95%;
             padding: 10px;
-            border-bottom: 2px solid #fe665b;
+            border-bottom: 1px solid #fe665b;
         }
 
-        .search-list>ul>li>a {
-            text-decoration: none;
-            color: inherit;
+        .search-list-a {
+            text-decoration: none !important;
+            color: #fff !important;
         }
 
         .artist {
@@ -162,6 +162,11 @@
             padding: 5px;
             float: right;
         }
+
+        .cover-image {
+            border-radius: 5px;
+            object-fit: cover;
+        }
     </style>
 
     <title>Dmusik</title>
@@ -189,19 +194,20 @@
                     <h1 class="header">Dmusik</h1>
                     <div class="col-md-6 blur">
                         <h4 class="lead">Search for your favourite song</h4>
-                        <input id="searchQuery" type="search" class="search-bar" name="search" placeholder="Search here">
-                        <div class="search-list">
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        The song name
+                        <input id="searchQuery" type="search" class="search-bar" placeholder="Search here">
+                        <div id="searchContainer" class="search-list">
+                            <!-- <ul class="search-list-ul">
+                                <li class="search-list-li">
+                                    <a href="#" target="_blank" class="search-list-a">
+                                        <img src="" alt="" class="cover-image" width="50px" height="100%">
+                                        <b>The song name</b>
                                         <small class="artist">-artist name</small>
                                     </a>
                                     <button class="preview">&#9658; preview</button>
                                     <button class="support">support</button>
                                     <audio src=""></audio>
                                 </li>
-                            </ul>
+                            </ul> -->
                         </div>
                     </div>
                 </div>

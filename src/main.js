@@ -6,15 +6,69 @@
 // import { axios } from "axios";
 import * as axios from 'axios';
 
-document.getElementById("searchQuery").addEventListener('input', function (evt) {
-    axios.get(`https://api.allorigins.win/raw?url=https://api.deezer.com/search?q=${this.value}`)
+let searchList = [];
+let searchResult = [];
+
+let searchQuery = document.getElementById("searchQuery");
+searchQuery.addEventListener('input', evt => {
+    axios.get(`https://api.allorigins.win/raw?url=https://api.deezer.com/search?q=${searchQuery.value}`)
         .then(function (response) {
-            console.log(response.data.data);
+            let searchContainer = document.getElementById("searchContainer");
+            if (evt.inputType == "deleteContentBackward") {
+                searchList = [];
+                searchList.length = 0;
+                searchContainer.innerHTML = ""
+            } else {
+                searchList = response.data.data;
+                // searchList.filter(_search => {
+                //     const newDiv = document.createElement("ul")
+                //     newDiv.className = "search-list-ul"
+                //     newDiv.innerHTML = searchResultTemplate(_search)
+                //     searchContainer.appendChild(newDiv)
+
+                // })
+                let filteredResult = searchList.filter(_search => {
+                    _search.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+                        _search.title_short.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+                        _search.album.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+                        _search.artist.name.toLowerCase().includes(searchQuery.value.toLowerCase());
+
+                    // const newDiv = document.createElement("ul")
+                    // newDiv.className = "search-list-ul"
+                    // newDiv.innerHTML = searchResultTemplate(_search)
+                    // searchContainer.appendChild(newDiv)
+
+                })
+                console.log(filteredResult);
+            };
         })
         .catch(function (error) {
             console.log(error);
         });
 });
+
+function searchResultTemplate(_search) {
+    return `
+        <li class="search-list-li">
+            <a href="${_search.link}" target="_blank" class="search-list-a">
+                <img src="${_search.album.cover}" alt="${_search.album.title}" class="cover-image" width="50px" height="100%">
+                <b>${truncateTitle(_search.title)}<b/>
+                <small class="artist">-${truncateArtist(_search.artist.name)}</small>
+            </a>
+            <button class="preview">&#9658; preview</button>
+            <button class="support">support</button>
+            <audio src="${_search.preview}"></audio>
+        </li>
+  `
+}
+
+function truncateTitle(_title) {
+    return `${String(_title).substring(0, 15)}...`
+}
+
+function truncateArtist(_title) {
+    return `${String(_title).substring(0, 10)}...`
+}
 
 // const ERC20_DECIMALS = 18
 // const MPContractAddress = "0x178134c92EC973F34dD0dd762284b852B211CFC8"
