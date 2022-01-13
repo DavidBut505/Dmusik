@@ -13,17 +13,12 @@ searchQuery.addEventListener('input', evt => {
     axios.get(`https://api.allorigins.win/raw?url=https://api.deezer.com/search?q=${searchQuery.value}`)
         .then(function (response) {
             let searchContainer = document.getElementById("searchContainer");
-            let emptySearch = document.getElementById("emptySearch");
 
             if (evt.inputType == "deleteContentBackward") {
                 searchResult = [];
                 searchResult.length = 0;
                 searchContainer.innerHTML = ""
-                emptySearch.classList.remove("d-none");
-                emptySearch.classList.add("d-block");
             } else {
-                emptySearch.classList.remove("d-block");
-                emptySearch.classList.add("d-none");
                 let filteredResult = response.data.data.find(_search => _search.title.toLowerCase().includes(searchQuery.value.toLowerCase()));
                 searchResult.push(filteredResult)
                 searchResult.reverse().filter(_search => {
@@ -52,7 +47,7 @@ function searchResultTemplate(_search) {
                 ${truncateTitle(_search.title)}
                 <small class="artist">-${truncateArtist(_search.artist.name)}</small>
             </a>
-            <button onclick="playNow(${_search.id})" class="preview">&#9658; preview</button>
+            <button onclick="playNow(${_search.id})" class="preview">&#119070; preview</button>
             <button class="support">support</button>
             <audio id="playPreview${_search.id}">
                 <source src="${_search.preview}" type="audio/mpeg">
