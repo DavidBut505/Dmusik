@@ -6,40 +6,32 @@
 // import { axios } from "axios";
 import * as axios from 'axios';
 
-let searchList = [];
 let searchResult = [];
-
 let searchQuery = document.getElementById("searchQuery");
+
 searchQuery.addEventListener('input', evt => {
     axios.get(`https://api.allorigins.win/raw?url=https://api.deezer.com/search?q=${searchQuery.value}`)
         .then(function (response) {
             let searchContainer = document.getElementById("searchContainer");
+            let emptySearch = document.getElementById("emptySearch");
+
             if (evt.inputType == "deleteContentBackward") {
-                searchList = [];
-                searchList.length = 0;
+                searchResult = [];
+                searchResult.length = 0;
                 searchContainer.innerHTML = ""
+                emptySearch.classList.remove("d-none");
+                emptySearch.classList.add("d-block");
             } else {
-                searchList = response.data.data;
-                // searchList.filter(_search => {
-                //     const newDiv = document.createElement("ul")
-                //     newDiv.className = "search-list-ul"
-                //     newDiv.innerHTML = searchResultTemplate(_search)
-                //     searchContainer.appendChild(newDiv)
-
-                // })
-                let filteredResult = searchList.filter(_search => {
-                    _search.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-                        _search.title_short.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-                        _search.album.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-                        _search.artist.name.toLowerCase().includes(searchQuery.value.toLowerCase());
-
-                    // const newDiv = document.createElement("ul")
-                    // newDiv.className = "search-list-ul"
-                    // newDiv.innerHTML = searchResultTemplate(_search)
-                    // searchContainer.appendChild(newDiv)
-
-                })
-                console.log(filteredResult);
+                emptySearch.classList.remove("d-block");
+                emptySearch.classList.add("d-none");
+                let filteredResult = response.data.data.find(_search => _search.title.toLowerCase().includes(searchQuery.value.toLowerCase()));
+                searchResult.push(filteredResult)
+                searchResult.reverse().filter(_search => {
+                    const newDiv = document.createElement("ul")
+                    newDiv.className = "search-list-ul"
+                    newDiv.innerHTML = searchResultTemplate(_search)
+                    searchContainer.appendChild(newDiv)
+                });
             };
         })
         .catch(function (error) {
@@ -47,17 +39,24 @@ searchQuery.addEventListener('input', evt => {
         });
 });
 
+window.playNow = (song_id) => {
+    let song = document.getElementById(`playPreview${song_id}`);
+    song.paused ? song.play() : song.pause()
+}
+
 function searchResultTemplate(_search) {
     return `
         <li class="search-list-li">
             <a href="${_search.link}" target="_blank" class="search-list-a">
                 <img src="${_search.album.cover}" alt="${_search.album.title}" class="cover-image" width="50px" height="100%">
-                <b>${truncateTitle(_search.title)}<b/>
+                ${truncateTitle(_search.title)}
                 <small class="artist">-${truncateArtist(_search.artist.name)}</small>
             </a>
-            <button class="preview">&#9658; preview</button>
+            <button onclick="playNow(${_search.id})" class="preview">&#9658; preview</button>
             <button class="support">support</button>
-            <audio src="${_search.preview}"></audio>
+            <audio id="playPreview${_search.id}">
+                <source src="${_search.preview}" type="audio/mpeg">
+            </audio>
         </li>
   `
 }
