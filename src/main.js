@@ -44,7 +44,7 @@ function searchResultTemplate(_search) {
         <li class="search-list-li">
             <a href="${_search.link}" target="_blank" class="search-list-a">
                 <img src="${_search.album.cover}" alt="${_search.album.title}" class="cover-image" width="50px" height="100%">
-                ${truncateTitle(_search.title)}
+                <span class="title">${truncateTitle(_search.title)}</span>
                 <small class="artist">-${truncateArtist(_search.artist.name)}</small>
             </a>
             <button onclick="playNow(${_search.id})" class="preview">&#119070; preview</button>
@@ -57,11 +57,11 @@ function searchResultTemplate(_search) {
 }
 
 function truncateTitle(_title) {
-    return `${String(_title).substring(0, 15)}...`
+    return `${String(_title).substring(0, 20)}...`
 }
 
 function truncateArtist(_title) {
-    return `${String(_title).substring(0, 10)}...`
+    return `${String(_title).substring(0, 15)}...`
 }
 
 // const ERC20_DECIMALS = 18
