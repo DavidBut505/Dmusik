@@ -39,14 +39,28 @@ window.playNow = (song_id) => {
     song.paused ? song.play() : song.pause()
 }
 
+
+window.likeSong = (song_id) => {
+    let song = document.getElementById(`playPreview${song_id}`);
+    song.paused ? song.play() : song.pause()
+}
+
+window.disLikeSong = (song_id) => {
+    let song = document.getElementById(`playPreview${song_id}`);
+    song.paused ? song.play() : song.pause()
+}
+
 function searchResultTemplate(_search) {
     return `
         <li class="search-list-li position-relative">
             <a href="${_search.link}" target="_blank" class="search-list-a">
-                <img src="${_search.album.cover}" alt="${_search.album.title}" class="cover-image">
-                <div class="info">
-                    <p class="title">${truncateTitle(_search.title)}</p>
-                    <small class="artist">-${truncateArtist(_search.artist.name)}</small>
+                <img src="${_search.album.cover}" alt="${_search.album.title}" class="cover-image position-absolute">
+                <div class="info position-absolute">
+                    <span class="title">${_search.title}</span>
+                    <br/>
+                    <span class="artist">-${_search.artist.name}</span>
+                    <br/>
+                    <small class="likes">Likes - 12</small>
                 </div>
             </a>
             <div class="right-side position-absolute">
@@ -60,14 +74,6 @@ function searchResultTemplate(_search) {
             </audio>
         </li>
   `
-}
-
-function truncateTitle(_title) {
-    return `${String(_title).substring(0, 50)}...`
-}
-
-function truncateArtist(_title) {
-    return `${String(_title).substring(0, 15)}...`
 }
 
 // const ERC20_DECIMALS = 18

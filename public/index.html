@@ -137,12 +137,14 @@
             color: #fff !important;
         }
 
-        .artist {
+        .artist, .likes {
             font-weight: lighter;
             font-size: 10px;
         }
 
         .title {
+            width: auto;
+            height: 10px;
             font-size: 12px;
             line-height: 0;
         }
@@ -169,9 +171,10 @@
 
         .cover-image {
             width: 80px;
-            height: 100%;
+            height: 80%;
             border-radius: 5px;
             object-fit: cover;
+            display: inline-block;
         }
 
         .like-dislike {
@@ -189,6 +192,7 @@
 
         .info {
             display: inline-block;
+            left: 100px;
         }
     </style>
 
@@ -219,10 +223,13 @@
                         <div id="searchContainer" class="search-list">
                             <li class="search-list-li position-relative">
                                 <a href="_search.link" target="_blank" class="search-list-a">
-                                    <img src="_search.album.cover" alt="_search.album.title" class="cover-image">
-                                    <div class="info">
+                                    <img src="_search.album.cover" alt="_search.album.title" class="cover-image position-absolute">
+                                    <div class="info position-absolute">
                                         <span class="title">truncateTitle(_search.title)}</span>
-                                        <small class="artist">-truncateArtist(_search.artist.name)}</small>
+                                        <br/>
+                                        <span class="artist">-truncateArtist(_search.artist.name)}</span>
+                                        <br/>
+                                        <small class="likes">Likes - 12</small>
                                     </div>
                                 </a>
                                 <div class="right-side position-absolute">
