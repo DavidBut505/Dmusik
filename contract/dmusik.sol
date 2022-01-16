@@ -2,28 +2,15 @@
 pragma solidity >=0.7.0 <0.9.0;
 
 interface IERC20Token {
-    function transfer(address, uint256) external returns (bool);
+  function transfer(address, uint256) external returns (bool);
+  function approve(address, uint256) external returns (bool);
+  function transferFrom(address, address, uint256) external returns (bool);
+  function totalSupply() external view returns (uint256);
+  function balanceOf(address) external view returns (uint256);
+  function allowance(address, address) external view returns (uint256);
 
-    function approve(address, uint256) external returns (bool);
-
-    function transferFrom(
-        address,
-        address,
-        uint256
-    ) external returns (bool);
-
-    function totalSupply() external view returns (uint256);
-
-    function balanceOf(address) external view returns (uint256);
-
-    function allowance(address, address) external view returns (uint256);
-
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+  event Transfer(address indexed from, address indexed to, uint256 value);
+  event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
 library SafeMath {
@@ -38,11 +25,7 @@ library SafeMath {
         return sub(a, b, "SafeMath: subtraction overflow");
     }
 
-    function sub(
-        uint256 a,
-        uint256 b,
-        string memory errorMessage
-    ) internal pure returns (uint256) {
+    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         require(b <= a, errorMessage);
         uint256 c = a - b;
 
@@ -64,11 +47,7 @@ library SafeMath {
         return div(a, b, "SafeMath: division by zero");
     }
 
-    function div(
-        uint256 a,
-        uint256 b,
-        string memory errorMessage
-    ) internal pure returns (uint256) {
+    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         require(b > 0, errorMessage);
         uint256 c = a / b;
         // assert(a == b * c + a % b); // There is no case in which this doesn't hold
@@ -80,78 +59,70 @@ library SafeMath {
         return mod(a, b, "SafeMath: modulo by zero");
     }
 
-    function mod(
-        uint256 a,
-        uint256 b,
-        string memory errorMessage
-    ) internal pure returns (uint256) {
+    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         require(b != 0, errorMessage);
         return a % b;
     }
 }
 
-contract DmusikMarketplace {
-    address internal cUsdTokenAddress =
-        0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
-    using SafeMath for uint256;
 
-    uint256 internal argumentsLength = 0;
+contract DmusikMarketplace {
+
+    address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
+    using SafeMath for uint;
+
+    uint internal argumentsLength = 0;
     // support price 1 cusd
-    uint256 supportPrice = 2e18;
-    uint256 likePrice = 1e18;
+    uint supportPrice = 2e18;
+    uint likePrice = 1e18;
     address _contractOwner;
 
     struct Dmusik {
         address payable owner;
-        mapping(address => uint256) likes;
-        uint256 likesCount;
-        uint256 likesSum;
-        uint256 support;
+        mapping (address => uint) likes;
+        uint likesCount;
+        uint likesSum;
+        uint support;
     }
 
-    mapping(uint256 => Dmusik) internal dmusik;
+    mapping (uint => Dmusik) internal dmusik;
 
     constructor() {
         _contractOwner = msg.sender;
     }
-
+    
     modifier onlyOwner() {
         require(msg.sender == _contractOwner);
         _;
     }
 
-    function likeSong(uint256 _index, uint256 _like) public payable {
+
+    function likeSong(uint _index, uint _like) public payable {        
         require(
-            IERC20Token(cUsdTokenAddress).transferFrom(
-                msg.sender,
-                _contractOwner,
-                likePrice
-            ),
-            "Transfer failed."
+          IERC20Token(cUsdTokenAddress).transferFrom(
+            msg.sender,
+            _contractOwner,
+            likePrice
+          ),
+          "Transfer failed."
         );
 
-        uint256 prevLike = dmusik[_index].likes[msg.sender];
-        if (prevLike == 0) {
+        uint prevLike = dmusik[_index].likes[msg.sender];
+        if(prevLike == 0) {
             dmusik[_index].likesCount++;
         }
-        dmusik[_index].likesSum -= prevLike;
         dmusik[_index].likesSum += _like;
         dmusik[_index].likes[msg.sender] = _like;
     }
-
-    function getLikesCount(uint256 _index) public view returns (uint256) {
+    
+    function getLikesCount(uint _index) public view returns (uint) {
         return dmusik[_index].likesCount;
     }
 
-    function dmusikSupport() public payable {
+   function dmusikSupport() public payable {
         payable(msg.sender);
-        require(
-            IERC20Token(cUsdTokenAddress).transferFrom(
-                msg.sender,
-                _contractOwner,
-                supportPrice
-            ),
-            "Transfer failed."
+            require(IERC20Token(cUsdTokenAddress).transferFrom(msg.sender, _contractOwner,supportPrice),
+          "Transfer failed."
         );
-    }
+	}
 }

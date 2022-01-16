@@ -79,8 +79,7 @@ searchQuery.addEventListener('input', evt => {
 
 // search template
 async function searchResultTemplate(_search) {
-    const result = await contract.methods.getLikesCount(_search.id).call();
-    document.getElementById(`likesOf${_search.id}`).innerHTML = `Likes - ${result}`;
+    let likes = await contract.methods.getLikesCount(_search.id).call();
     return `
         <li class="search-list-li position-relative">
             <a href="${_search.link}" target="_blank" class="search-list-a">
@@ -90,7 +89,7 @@ async function searchResultTemplate(_search) {
                     <br/>
                     <span class="artist">-${_search.artist.name}</span>
                     <br/>
-                    <span id="likesOf${_search.id}" class="likes"></span>
+                    <span class="likes">Likes - ${likes}</span>
                 </div>
             </a>
             <div class="right-side position-absolute">
