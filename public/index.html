@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body,
         html {
@@ -126,7 +127,9 @@
 
         .search-list-li {
             width: 95%;
+            height: 100px;
             padding: 10px;
+            border-bottom: 1px solid #f5f5f5;
         }
 
         .search-list-a {
@@ -141,6 +144,7 @@
 
         .title {
             font-size: 12px;
+            line-height: 0;
         }
 
         .support {
@@ -148,11 +152,9 @@
             background-color: #238636;
             color: #fff;
             border-radius: 5px;
-            border: 1px solid #238636;
+            border: none;
             font-size: 12px;
             padding: 5px;
-            float: right;
-            margin-right: 1%;
         }
 
         .preview {
@@ -160,15 +162,33 @@
             background-color: #fff;
             color: #000;
             border-radius: 5px;
-            border: 1px solid #fff;
+            border: none;
             font-size: 12px;
             padding: 5px;
-            float: right;
         }
 
         .cover-image {
+            width: 80px;
+            height: 100%;
             border-radius: 5px;
             object-fit: cover;
+        }
+
+        .like-dislike {
+            outline: none;
+            background-color: transparent;
+            border: none;
+            color: #fe665b;
+            padding: 5px;
+        }
+
+        .right-side {
+            bottom: 5px;
+            right: 0;
+        }
+
+        .info {
+            display: inline-block;
         }
     </style>
 
@@ -181,9 +201,7 @@
         <header class="mb-auto">
             <div>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
-                    <a class="nav-link fw-light active" aria-current="page" href="#" id="home">Home</a>
-                    <a class="nav-link fw-light" href="#" id="topSongs">Top Songs</a>
-                    <a class="nav-link fw-light" href="#" id="topAlbum">Top Album</a>
+                    <a class="nav-link fw-light" id="balance">0 cUSD</a>
                 </nav>
             </div>
         </header>
@@ -198,7 +216,26 @@
                     <div class="col-md-6 blur">
                         <h4 class="lead">Search for your favourite song</h4>
                         <input id="searchQuery" type="search" class="search-bar" placeholder="Search for songs only">
-                        <div id="searchContainer" class="search-list"></div>
+                        <div id="searchContainer" class="search-list">
+                            <li class="search-list-li position-relative">
+                                <a href="_search.link" target="_blank" class="search-list-a">
+                                    <img src="_search.album.cover" alt="_search.album.title" class="cover-image">
+                                    <div class="info">
+                                        <span class="title">truncateTitle(_search.title)}</span>
+                                        <small class="artist">-truncateArtist(_search.artist.name)}</small>
+                                    </div>
+                                </a>
+                                <div class="right-side position-absolute">
+                                    <button class="like-dislike"><i class="far fa-thumbs-down"></i></button>
+                                    <button class="like-dislike"><i class="far fa-thumbs-up"></i></button>
+                                    <button class="support">support</button>
+                                    <button class="preview"><i class="fas fa-music"></i> Preview</button>
+                                </div>
+                                <audio id="playPreview_search.id">
+                                    <source src="_search.preview" type="audio/mpeg">
+                                </audio>
+                            </li>
+                        </div>
                     </div>
                 </div>
             </div>

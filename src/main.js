@@ -41,14 +41,20 @@ window.playNow = (song_id) => {
 
 function searchResultTemplate(_search) {
     return `
-        <li class="search-list-li">
+        <li class="search-list-li position-relative">
             <a href="${_search.link}" target="_blank" class="search-list-a">
-                <img src="${_search.album.cover}" alt="${_search.album.title}" class="cover-image" width="50px" height="100%">
-                <span class="title">${truncateTitle(_search.title)}</span>
-                <small class="artist">-${truncateArtist(_search.artist.name)}</small>
+                <img src="${_search.album.cover}" alt="${_search.album.title}" class="cover-image">
+                <div class="info">
+                    <p class="title">${truncateTitle(_search.title)}</p>
+                    <small class="artist">-${truncateArtist(_search.artist.name)}</small>
+                </div>
             </a>
-            <button onclick="playNow(${_search.id})" class="preview">&#119070; preview</button>
-            <button class="support">support</button>
+            <div class="right-side position-absolute">
+                <button onclick="disLikeSong(${_search.id})" class="like-dislike"><i class="far fa-thumbs-down"></i></button>
+                <button onclick="likeSong(${_search.id})" class="like-dislike"><i class="far fa-thumbs-up"></i></button>
+                <button class="support">support</button>
+                <button onclick="playNow(${_search.id})" class="preview"><i class="fas fa-music"></i> Preview</button>
+            </div>
             <audio id="playPreview${_search.id}">
                 <source src="${_search.preview}" type="audio/mpeg">
             </audio>
@@ -57,7 +63,7 @@ function searchResultTemplate(_search) {
 }
 
 function truncateTitle(_title) {
-    return `${String(_title).substring(0, 20)}...`
+    return `${String(_title).substring(0, 50)}...`
 }
 
 function truncateArtist(_title) {
