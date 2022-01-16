@@ -137,7 +137,8 @@
             color: #fff !important;
         }
 
-        .artist, .likes {
+        .artist,
+        .likes {
             font-weight: lighter;
             font-size: 10px;
         }
@@ -210,6 +211,10 @@
             </div>
         </header>
 
+        <div class="col-3 fixed-top alert alert-info" role="alert">
+            <span id="notification"></span>
+        </div>
+
         <main class="px-3">
             <div class="container">
                 <div class="row position-relative">
@@ -220,29 +225,7 @@
                     <div class="col-md-6 blur">
                         <h4 class="lead">Search for your favourite song</h4>
                         <input id="searchQuery" type="search" class="search-bar" placeholder="Search for songs only">
-                        <div id="searchContainer" class="search-list">
-                            <li class="search-list-li position-relative">
-                                <a href="_search.link" target="_blank" class="search-list-a">
-                                    <img src="_search.album.cover" alt="_search.album.title" class="cover-image position-absolute">
-                                    <div class="info position-absolute">
-                                        <span class="title">truncateTitle(_search.title)}</span>
-                                        <br/>
-                                        <span class="artist">-truncateArtist(_search.artist.name)}</span>
-                                        <br/>
-                                        <small class="likes">Likes - 12</small>
-                                    </div>
-                                </a>
-                                <div class="right-side position-absolute">
-                                    <button class="like-dislike"><i class="far fa-thumbs-down"></i></button>
-                                    <button class="like-dislike"><i class="far fa-thumbs-up"></i></button>
-                                    <button class="support">support</button>
-                                    <button class="preview"><i class="fas fa-music"></i> Preview</button>
-                                </div>
-                                <audio id="playPreview_search.id">
-                                    <source src="_search.preview" type="audio/mpeg">
-                                </audio>
-                            </li>
-                        </div>
+                        <div id="searchContainer" class="search-list"></div>
                     </div>
                 </div>
             </div>
